@@ -2,6 +2,7 @@ package com.narendra.springboot.jwtAuth.dao;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -11,18 +12,23 @@ public class ApplicationUser implements Serializable {
     private static final long serialVersionUID = 7710840166748748505L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @GeneratedValue
+    private long appUserId;
 
     private String username;
     private String password;
 
-    public long getId() {
-        return id;
+    @ManyToMany
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "app_user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private List<Role> roles;
+
+    public long getAppUserId() {
+        return appUserId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setAppUserId(long appUserId) {
+        this.appUserId = appUserId;
     }
 
     public String getUsername() {
@@ -41,28 +47,38 @@ public class ApplicationUser implements Serializable {
         this.password = password;
     }
 
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ApplicationUser that = (ApplicationUser) o;
-        return id == that.id &&
+        return appUserId == that.appUserId &&
                 Objects.equals(username, that.username) &&
-                Objects.equals(password, that.password);
+                Objects.equals(password, that.password) &&
+                Objects.equals(roles, that.roles);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, username, password);
+        return Objects.hash(appUserId, username, password, roles);
     }
 
     @Override
     public String toString() {
         return "ApplicationUser{" +
-                "id=" + id +
+                "appUserId=" + appUserId +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", roles=" + roles +
                 '}';
     }
 }
