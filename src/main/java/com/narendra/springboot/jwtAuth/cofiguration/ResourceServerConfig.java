@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
 import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
 
 //this is what client wants to access
@@ -15,24 +16,28 @@ import org.springframework.security.oauth2.provider.token.ResourceServerTokenSer
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
-    @Autowired
-    private ResourceServerTokenServices tokenServices;
+/*    @Autowired
+    private ResourceServerTokenServices tokenServices;*/
 
     @Value("${security.jwt.resource-id}")
     private String resourceId;
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
-        resources.resourceId(resourceId).tokenServices(tokenServices);
+        //resources.resourceId(resourceId).tokenServices(tokenServices);
+        resources.resourceId(resourceId).stateless(false);
     }
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
-                .requestMatchers()
-                .and()
+                // .anonymous().disable()
+                // .authorizeRequests()
+                // .antMatchers("/users/sign-up/**").permitAll()
+                // .antMatchers("/users/**" ).authenticated();
+                .anonymous().disable()
                 .authorizeRequests()
-                .antMatchers("/users/sign-up/**").permitAll()
-                .antMatchers("/users/**" ).authenticated();
+                .antMatchers("/users/**").access("hasRole('ADMIN')")
+                .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
     }
 }
