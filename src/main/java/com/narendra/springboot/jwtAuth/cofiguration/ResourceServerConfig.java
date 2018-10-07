@@ -13,9 +13,6 @@ import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHand
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
-/*    @Autowired
-    private ResourceServerTokenServices tokenServices;*/
-
     @Value("${security.jwt.resource-id}")
     private String resourceId;
 
