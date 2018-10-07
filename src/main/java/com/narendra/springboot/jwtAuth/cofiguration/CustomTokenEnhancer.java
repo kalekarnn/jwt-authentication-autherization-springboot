@@ -22,6 +22,7 @@ public class CustomTokenEnhancer extends JwtAccessTokenConverter {
         ((DefaultOAuth2AccessToken) oAuth2AccessToken).setAdditionalInformation(additionalInfo);
 
         oAuth2AccessToken = super.enhance(oAuth2AccessToken, oAuth2Authentication);
+
         ((DefaultOAuth2AccessToken) oAuth2AccessToken).setAdditionalInformation(Collections.emptyMap());
 
         return oAuth2AccessToken;
