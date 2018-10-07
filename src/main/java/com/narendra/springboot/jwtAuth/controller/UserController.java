@@ -19,7 +19,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ApplicationUser getUserById(@PathVariable String id){
         return userService.getUserById(id);
     }

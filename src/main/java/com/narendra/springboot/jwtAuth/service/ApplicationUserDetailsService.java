@@ -29,13 +29,13 @@ public class ApplicationUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException(String.format("The username %s doesn't exist", s));
         }
 
-/*        List<GrantedAuthority> authorities = new ArrayList<>();
+        List<GrantedAuthority> authorities = new ArrayList<>();
         user.getRoles().forEach(role -> {
             authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
-        });*/
+        });
 
 
-        List<SimpleGrantedAuthority> authorities  = Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"));
+      //  List<SimpleGrantedAuthority> authorities  = Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"));
 
         UserDetails userDetails = new org.springframework.security.core.userdetails.
                 User(user.getUsername(), user.getPassword(), authorities);

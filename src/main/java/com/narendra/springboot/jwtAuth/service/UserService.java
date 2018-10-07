@@ -26,6 +26,6 @@ public class UserService {
     }
 
     public ApplicationUser getUserById(String id) {
-        return applicationUserRepository.findById(id).get();
+        return applicationUserRepository.findById(Long.valueOf(id)).get();
     }
 }
