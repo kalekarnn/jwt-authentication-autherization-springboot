@@ -11,12 +11,9 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
-import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
-
-import java.util.Arrays;
 
 //login to github with facebook -->  this auth server is of facebook, client is github
 @Configuration
@@ -95,7 +92,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 Arrays.asList(tokenEnhancer()));*/
 
         endpoints.tokenStore(tokenStore())
-               /* .tokenEnhancer(tokenEnhancerChain)*/
+                /* .tokenEnhancer(tokenEnhancerChain)*/
                 .tokenEnhancer(tokenEnhancer())
                 .authenticationManager(authenticationManager);
     }
